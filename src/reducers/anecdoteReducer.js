@@ -26,6 +26,13 @@ export const voteAction = (id) => {
   };
 };
 
+export const createNoteAction = (anecdote) => {
+  return {
+    type: "CREATE_NOTE",
+    payload: asObject(anecdote),
+  };
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "VOTE":
@@ -34,6 +41,9 @@ const reducer = (state = initialState, action) => {
         item.id !== id ? item : { ...item, votes: item.votes + 1 }
       );
       return updatedVote;
+    case "CREATE_NOTE":
+      const newAnecdote = action.payload;
+      return [...state, newAnecdote];
     default:
       return state;
   }

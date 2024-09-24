@@ -26,14 +26,14 @@ export const voteAction = (id) => {
   };
 };
 
-export const createNoteAction = (anecdote) => {
+export const createAnecdoteAction = (anecdote) => {
   return {
-    type: "CREATE_NOTE",
+    type: "CREATE_ANECDOTE",
     payload: asObject(anecdote),
   };
 };
 
-const reducer = (state = initialState, action) => {
+const anecdoteReducer = (state = initialState, action) => {
   switch (action.type) {
     case "VOTE":
       const id = action.payload;
@@ -41,7 +41,7 @@ const reducer = (state = initialState, action) => {
         item.id !== id ? item : { ...item, votes: item.votes + 1 }
       );
       return updatedVote;
-    case "CREATE_NOTE":
+    case "CREATE_ANECDOTE":
       const newAnecdote = action.payload;
       return [...state, newAnecdote];
     default:
@@ -49,4 +49,4 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-export default reducer;
+export default anecdoteReducer;

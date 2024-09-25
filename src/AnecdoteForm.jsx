@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { createAnecdoteAction } from "./reducers/anecdoteReducer";
+import { anecdoteCreated } from "./reducers/anecdoteReducer";
 
 export default function AnecdoteForm() {
   const dispatch = useDispatch();
@@ -8,7 +8,7 @@ export default function AnecdoteForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const content = event.target.anecdote.value;
-    dispatch(createAnecdoteAction(content));
+    dispatch(anecdoteCreated(content));
     event.target.anecdote.value = "";
   };
 

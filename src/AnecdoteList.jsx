@@ -1,6 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { anecdoteVoted } from "./reducers/anecdoteReducer";
+import {
+  notificationRemoved,
+  notificationSet,
+} from "./reducers/notificationReducer";
 
 export default function AnecdoteList() {
   const { anecdotes, searchFilter } = useSelector((state) => state);
@@ -13,8 +17,12 @@ export default function AnecdoteList() {
 
   const sortedAnecdotes = filteredAnecdotes.sort((a, b) => b.votes - a.votes);
 
-  const handleVote = (id) => {
+  const handleVote = (id, message) => {
     dispatch(anecdoteVoted({ id }));
+    dispatch(notificationSet({ type: "VOTE", message }));
+    setTimeout(() => {
+      dispatch(notificationRemoved());
+    }, 5000);
   };
 
   return (
@@ -26,7 +34,11 @@ export default function AnecdoteList() {
               <div>{anecdote.content}</div>
               <div>
                 has {anecdote.votes}
-                <button onClick={() => handleVote(anecdote.id)}>vote</button>
+                <button
+                  onClick={() => handleVote(anecdote.id, anecdote.content)}
+                >
+                  vote
+                </button>
               </div>
             </div>
           )

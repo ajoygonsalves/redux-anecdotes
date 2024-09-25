@@ -1,5 +1,6 @@
 import AnecdoteForm from "./AnecdoteForm";
 import AnecdoteList from "./AnecdoteList";
+import Notification from "./Notification";
 import SearchFilter from "./SearchFilter";
 import { useEffect } from "react";
 
@@ -11,6 +12,7 @@ const App = () => {
   return (
     <div>
       <h2>Anecdotes</h2>
+      <Notification />
       <SearchFilter />
       <AnecdoteList />
       <AnecdoteForm />

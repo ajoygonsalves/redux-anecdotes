@@ -18,7 +18,6 @@ export default function AnecdoteList() {
     async function fetchData() {
       try {
         const initialData = await anecdotesService.getAll();
-        console.log(initialData);
         dispatch(anecdotesSet(initialData));
       } catch (error) {
         console.error("Failed to fetch data:", error);

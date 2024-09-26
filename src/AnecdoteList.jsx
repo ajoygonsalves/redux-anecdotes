@@ -9,6 +9,7 @@ import {
 import {
   notificationRemoved,
   notificationSet,
+  setNotification,
 } from "./reducers/notificationReducer";
 import anecdotesService from "./services/anecdoteService";
 
@@ -36,10 +37,16 @@ export default function AnecdoteList() {
 
   const handleVote = (id, message) => {
     dispatch(voteAnecdote(id));
-    dispatch(notificationSet({ type: "VOTE", message }));
-    setTimeout(() => {
-      dispatch(notificationRemoved());
-    }, 5000);
+    dispatch(
+      setNotification({
+        content: `You voted for '${message}'`,
+        time: 5000, // 5 seconds
+      })
+    );
+    // dispatch(notificationSet({ type: "VOTE", message }));
+    // setTimeout(() => {
+    //   dispatch(notificationRemoved());
+    // }, 5000);
   };
 
   return (

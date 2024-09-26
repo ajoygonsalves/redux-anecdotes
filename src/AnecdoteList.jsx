@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { anecdoteVoted } from "./reducers/anecdoteReducer";
+import { anecdotesSet, anecdoteVoted } from "./reducers/anecdoteReducer";
 import {
   notificationRemoved,
   notificationSet,
 } from "./reducers/notificationReducer";
+import anecdotesService from "./services/anecdoteService";
 
 export default function AnecdoteList() {
   const { anecdotes, searchFilter } = useSelector((state) => state);
@@ -12,6 +13,19 @@ export default function AnecdoteList() {
   const filteredAnecdotes = anecdotes.filter((anecdote) =>
     anecdote.content.toLowerCase().includes(searchFilter.toLowerCase())
   );
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const initialData = await anecdotesService.getAll();
+        console.log(initialData);
+        dispatch(anecdotesSet(initialData));
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    }
+    fetchData();
+  }, []);
 
   const dispatch = useDispatch();
 

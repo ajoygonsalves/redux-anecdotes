@@ -3,10 +3,12 @@ import anecdoteReducer from "../reducers/anecdoteReducer";
 import searchFilterReducer from "../reducers/searchFilterReducer";
 import notificationReducer from "../reducers/notificationReducer";
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     anecdotes: anecdoteReducer,
     searchFilter: searchFilterReducer,
     notifications: notificationReducer,
   },
 });
+
+export default store;

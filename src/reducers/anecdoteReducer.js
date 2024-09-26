@@ -1,4 +1,6 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
+import anecdoteService from "../services/anecdoteService";
 
 const anecdotesAtStart = [
   "If it hurts, do it more often",
@@ -21,6 +23,15 @@ export const asObject = (anecdote) => {
 
 // const initialState = anecdotesAtStart.map(asObject);
 
+export const getAllAnecdotes = createAsyncThunk(
+  "anecdote/getAllAnecdotes",
+  async () => {
+    console.log("WORKING");
+    const res = await anecdoteService.getAll();
+    return res;
+  }
+);
+
 const anecdoteSlice = createSlice({
   name: "anecdote",
   initialState: [],
@@ -39,8 +50,14 @@ const anecdoteSlice = createSlice({
       return action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(getAllAnecdotes.fulfilled, (state, { payload }) => {
+      return (state = payload);
+    });
+  },
 });
 
-export default anecdoteSlice.reducer;
 export const { anecdoteVoted, anecdoteCreated, anecdotesSet } =
   anecdoteSlice.actions;
+
+export default anecdoteSlice.reducer;

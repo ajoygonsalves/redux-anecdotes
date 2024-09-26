@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { anecdotesSet, anecdoteVoted } from "./reducers/anecdoteReducer";
+import {
+  anecdotesSet,
+  anecdoteVoted,
+  getAllAnecdotes,
+} from "./reducers/anecdoteReducer";
 import {
   notificationRemoved,
   notificationSet,
@@ -17,8 +21,7 @@ export default function AnecdoteList() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const initialData = await anecdotesService.getAll();
-        dispatch(anecdotesSet(initialData));
+        dispatch(getAllAnecdotes());
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }

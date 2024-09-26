@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import anecdoteService from "../services/anecdoteService";
 
 const anecdotesAtStart = [
@@ -26,9 +26,14 @@ export const asObject = (anecdote) => {
 export const getAllAnecdotes = createAsyncThunk(
   "anecdote/getAllAnecdotes",
   async () => {
-    console.log("WORKING");
-    const res = await anecdoteService.getAll();
-    return res;
+    return await anecdoteService.getAll();
+  }
+);
+
+export const createAnecdote = createAsyncThunk(
+  "anecdote/createAnecdote",
+  async (text) => {
+    return anecdoteService.createAnecdote(text);
   }
 );
 
@@ -51,9 +56,13 @@ const anecdoteSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getAllAnecdotes.fulfilled, (state, { payload }) => {
-      return (state = payload);
-    });
+    builder
+      .addCase(getAllAnecdotes.fulfilled, (state, { payload }) => {
+        return (state = payload);
+      })
+      .addCase(createAnecdote.fulfilled, (state, { payload }) => {
+        state.push(payload);
+      });
   },
 });
 

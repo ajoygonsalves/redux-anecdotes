@@ -12,9 +12,10 @@ const getAll = async () => {
   }
 };
 
-const createAnecdote = async (anecdote) => {
+const createAnecdote = async (text) => {
   try {
-    axios.post(baseUrl, asObject(anecdote));
+    const res = await axios.post(baseUrl, asObject(text));
+    return res.data;
   } catch (e) {
     console.log("Error: ", e);
   }

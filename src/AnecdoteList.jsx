@@ -4,6 +4,7 @@ import {
   anecdotesSet,
   anecdoteVoted,
   getAllAnecdotes,
+  voteAnecdote,
 } from "./reducers/anecdoteReducer";
 import {
   notificationRemoved,
@@ -34,7 +35,7 @@ export default function AnecdoteList() {
   const sortedAnecdotes = filteredAnecdotes.sort((a, b) => b.votes - a.votes);
 
   const handleVote = (id, message) => {
-    dispatch(anecdoteVoted({ id }));
+    dispatch(voteAnecdote(id));
     dispatch(notificationSet({ type: "VOTE", message }));
     setTimeout(() => {
       dispatch(notificationRemoved());

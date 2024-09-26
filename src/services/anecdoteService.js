@@ -21,4 +21,16 @@ const createAnecdote = async (text) => {
   }
 };
 
-export default { getAll, createAnecdote };
+const voteAnecdote = async (id) => {
+  try {
+    const res = await axios.get(`${baseUrl}/${id}`);
+    const update = await axios.patch(`${baseUrl}/${id}`, {
+      votes: res.data.votes + 1,
+    });
+    return update.data;
+  } catch (e) {
+    console.log("Error: ", e);
+  }
+};
+
+export default { getAll, createAnecdote, voteAnecdote };

@@ -37,6 +37,13 @@ export const createAnecdote = createAsyncThunk(
   }
 );
 
+export const voteAnecdote = createAsyncThunk(
+  "anecdote/voteAnecdote",
+  async (id) => {
+    return anecdoteService.voteAnecdote(id);
+  }
+);
+
 const anecdoteSlice = createSlice({
   name: "anecdote",
   initialState: [],
@@ -62,6 +69,12 @@ const anecdoteSlice = createSlice({
       })
       .addCase(createAnecdote.fulfilled, (state, { payload }) => {
         state.push(payload);
+      })
+      .addCase(voteAnecdote.fulfilled, (state, { payload }) => {
+        const index = state.findIndex((a) => a.id === payload.id);
+        if (index !== -1) {
+          state[index].votes++;
+        }
       });
   },
 });
